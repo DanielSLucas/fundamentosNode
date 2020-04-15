@@ -24,26 +24,44 @@ class TransactionsRepository {
   }
 
   public getBalance(): Balance {
-    const reducer = (acc: Balance, obj: Transaction): Balance => {
-      const key = obj.type;
-      if (!acc[key]) {
-        acc[key] = 0;
-      }
+    const balance = this.transactions.reduce(
+      (acc: Balance, obj: Transaction) => {
+        if (obj.type === 'income') {
+          acc.income += obj.value;
+        } else if (obj.type === 'outcome') {
+          acc.outcome += obj.value;
+        }
 
-      acc[key] += Number(obj.value);
-      return acc;
-    };
+        acc.total = acc.income - acc.outcome;
+        return acc;
+      },
+      {
+        income: 0,
+        outcome: 0,
+        total: 0,
+      },
+    );
 
-    const totais = this.transactions.reduce(reducer, {});
-    const { income = 0 } = totais;
-    const { outcome = 0 } = totais;
-    const total = income - outcome;
+    // const reducer = (acc: Balance, obj: Transaction): Balance => {
+    //   const key = obj.type;
+    //   if (!acc[key]) {
+    //     acc[key] = 0;
+    //   }
 
-    const balance = {
-      income,
-      outcome,
-      total,
-    };
+    //   acc[key] += Number(obj.value);
+    //   return acc;
+    // };
+
+    // const totais = this.transactions.reduce(reducer, {});
+    // const { income = 0 } = totais;
+    // const { outcome = 0 } = totais;
+    // const total = income - outcome;
+
+    // const balance = {
+    //   income,
+    //   outcome,
+    //   total,
+    // };
 
     return balance;
   }
