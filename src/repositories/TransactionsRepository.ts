@@ -20,14 +20,7 @@ class TransactionsRepository {
   }
 
   public all(): Transaction[] {
-    const balance = this.getBalance();
-
-    const { transactions } = this;
-
-    return {
-      transactions,
-      balance,
-    };
+    return this.transactions;
   }
 
   public getBalance(): Balance {
