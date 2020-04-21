@@ -1,4 +1,4 @@
-# Desafio Node 1
+# Desafio Node 2
 
 Segundo Desafio de node no curso GoStack.
 
